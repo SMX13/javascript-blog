@@ -49,9 +49,7 @@ function generateTitleLinks(customSelector = ''){
   titleList.innerHTML = '';
 
   /* find all articles */
-  const articles = document.querySelectorAll(
-  optArticleSelector + customSelector
-);
+  const articles = document.querySelectorAll(optArticleSelector + customSelector);
 
   /* for each article */
   for(let article of articles){
@@ -87,20 +85,26 @@ generateTitleLinks();
 function generateTags(){
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
+
   /* START LOOP: for every article: */
   for (const article of articles) {
     /* find tags wrapper */
     const tagsWrapper = article.querySelector(optArticleTagsSelector);
+
     /* make html variable with empty string */
     let html = '';
+
     /* get tags from data-tags attribute */
     const articleTags = article.getAttribute('data-tags');
+
     /* split tags into array */
     const articleTagsArray = articleTags.split(' ');
+
     /* START LOOP: for each tag */
-    for(let tag of articleTagsArray) {
+    for (let tag of articleTagsArray) {
       /* generate HTML of the link */
       const tagHTML = `<li><a href="#tag-${tag}">${tag}</a></li>`;
+
       /* add generated code to html variable */
       html += tagHTML;
     }
@@ -108,9 +112,10 @@ function generateTags(){
 
     /* insert HTML of all the links into the tags wrapper */
     tagsWrapper.innerHTML = html;
-}
+  }
   /* END LOOP: for every article: */
 }
+
 
 generateTags();
 
