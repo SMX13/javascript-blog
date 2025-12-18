@@ -35,13 +35,30 @@ function titleClickHandler(event) {
 }
 
 
-
+/* global Handlebars */
 const optArticleSelector = '.post';
 const optTitleSelector = '.post-title';
 const optTitleListSelector = '.titles';
 const optArticleTagsSelector = '.post-tags .list';
 const optAuthorsListSelector = '.authors';
 const optTagsListSelector = '.tags';
+
+/* templates */
+const templates = {
+  tagLink: Handlebars.compile(
+    document.querySelector('#template-tag-link').innerHTML
+  ),
+  tagList: Handlebars.compile(
+    document.querySelector('#template-tag-list').innerHTML
+  ),
+  authorLink: Handlebars.compile(
+    document.querySelector('#template-author-link').innerHTML
+  ),
+  authorList: Handlebars.compile(
+    document.querySelector('#template-author-list').innerHTML
+  ),
+};
+
 
 
 
@@ -109,7 +126,7 @@ function generateTags() {
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
       /* generate HTML of the link */
-      const tagHTML = `<li><a href="#tag-${tag}">${tag}</a></li>`;
+      const tagHTML = templates.tagLink({ tag: tag });
 
       /* add generated code to html variable */
       html += tagHTML;
@@ -131,7 +148,7 @@ function generateTags() {
   const tagList = document.querySelector(optTagsListSelector);
 
   /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTags.join(' ');
+  tagList.innerHTML = templates.tagList({ tags: allTags });
 
 }
 
@@ -206,7 +223,7 @@ function generateAuthors() {
     const author = article.getAttribute('data-author');
 
     /* generate HTML of the link */
-    const authorHTML = `<a href="#author-${author}">${author}</a>`;
+    const authorHTML = templates.authorLink({ author });
 
     /* [NEW] check if this author is NOT already in allAuthors */
     if (allAuthors.indexOf(authorHTML) == -1) {
@@ -224,11 +241,15 @@ function generateAuthors() {
   const authorsList = document.querySelector(optAuthorsListSelector);
 
   /* [NEW] add html from allAuthors to authorsList */
-  authorsList.innerHTML = allAuthors.join(' ');
+  authorsList.innerHTML = templates.authorList({ authors: allAuthors });
+
 
 }
 
 generateAuthors();
+
+
+
 
 
 
